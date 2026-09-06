@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Giải tự động — cube.study</title>
+  <title>Tính giờ — cube.study</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
@@ -20,27 +20,35 @@
       <div class="nav-links">
         <a href="notation.html">Ký hiệu</a>
         <a href="algorithms.html">Công thức</a>
-        <a href="solver.html" class="active">Giải tự động</a>
+        <a href="solver.html" class="active">Tính giờ</a>
       </div>
     </div>
   </nav>
 
   <main class="shell">
-    <span class="eyebrow">Công cụ</span>
-    <h1 style="margin-top:14px">Bộ giải tự động</h1>
+    <span class="eyebrow">Công cụ luyện tốc độ</span>
+    <h1 style="margin-top:14px">Tính giờ solve</h1>
     <p style="color:var(--ink-soft); max-width:60ch; margin-top:14px">
-      Tạo 1 chuỗi xáo trộn ngẫu nhiên, hoặc dán chuỗi bạn tự có — hệ thống sẽ tính
-      lời giải ở phía server.
+      Bấm và giữ nút để sẵn sàng, thả ra để bắt đầu. Bấm lần nữa khi hoàn thành.
+      Kết quả được lưu ngay trên trình duyệt của bạn.
     </p>
 
-    <div class="solver-box">
-      <label for="scrambleInput">Chuỗi xáo trộn</label>
-      <input id="scrambleInput" placeholder="R U2 F' L D2 B U' R2 F..." />
-      <div>
-        <button class="primary" id="btnScramble">Tạo xáo trộn</button>
-        <button class="secondary" id="btnSolve">Giải</button>
-      </div>
-      <div class="result-line" id="resultLine"></div>
+    <div class="timer-layout">
+      <section class="timer-panel" aria-label="Đồng hồ bấm giờ">
+        <div class="timer-topline"><span id="timerStatus">Sẵn sàng</span><span id="solveCount">0 solve</span></div>
+        <div class="scramble-line" id="scrambleLine">R U2 F' L2 D B' R U' F2</div>
+        <button class="timer-display" id="timerDisplay" type="button" aria-label="Bắt đầu hoặc dừng đồng hồ">00:00.00</button>
+        <div class="timer-actions">
+          <button class="primary" id="newScramble" type="button">Xáo trộn mới</button>
+          <button class="secondary" id="resetTimer" type="button">Đặt lại</button>
+        </div>
+      </section>
+
+      <aside class="history-panel">
+        <div class="panel-heading"><h2>Thành tích gần đây</h2><span id="bestTime">--</span></div>
+        <ol class="solve-list" id="solveList"><li class="empty-state">Chưa có solve nào</li></ol>
+        <p class="timer-hint">Phím tắt: giữ <span class="move">Space</span> để sẵn sàng</p>
+      </aside>
     </div>
   </main>
 
