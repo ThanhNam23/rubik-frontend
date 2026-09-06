@@ -1,3 +1,29 @@
+// ---- Perspective cube diagrams ----
+function createMiniCube(container) {
+  const sourceCells = [...container.querySelectorAll('.cell')];
+  const sourceColors = sourceCells.length >= 25
+    ? [6, 7, 8, 11, 12, 13, 16, 17, 18].map((index) => sourceCells[index].classList.contains('y') ? 'yellow' : 'gray')
+    : sourceCells.slice(0, 9).map((cell) => cell.classList.contains('side-o') ? 'orange' : cell.classList.contains('side-g') ? 'green' : cell.classList.contains('side-b') ? 'blue' : cell.classList.contains('side-r') ? 'red' : 'yellow');
+  const faces = ['cube-top', 'cube-front', 'cube-right'];
+  container.className = 'diagram-stage';
+  container.replaceChildren();
+  const cube = document.createElement('div');
+  cube.className = 'cube-3d cube-3d-mini';
+  faces.forEach((faceName, faceIndex) => {
+    const face = document.createElement('div');
+    face.className = `cube-face ${faceName}`;
+    for (let index = 0; index < 9; index += 1) {
+      const sticker = document.createElement('i');
+      sticker.className = `sticker ${faceIndex === 0 ? (sourceColors[index] || 'gray') : faceIndex === 1 ? 'red' : 'blue'}`;
+      face.appendChild(sticker);
+    }
+    cube.appendChild(face);
+  });
+  container.appendChild(cube);
+}
+
+document.querySelectorAll('.oll-diagram, .pll-diagram').forEach(createMiniCube);
+
 // ---- Tabs cho trang algorithms.html ----
 const tabButtons = document.querySelectorAll('.tab-row button');
 const tabLabels = {
