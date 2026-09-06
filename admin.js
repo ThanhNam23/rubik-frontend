@@ -25,6 +25,9 @@ const canvas = document.getElementById('stickerCanvas');
 const form = document.getElementById('formulaForm');
 const savedList = document.getElementById('savedList');
 const status = document.getElementById('saveStatus');
+const storageMode = document.getElementById('storageMode');
+const formulaApi = '/api/admin/formulas';
+let apiAvailable = true;
 
 function renderPalette() {
   paletteElement.innerHTML = palette.map(({ name, color }) => `
@@ -67,7 +70,7 @@ function renderCanvas() {
   });
 }
 
-function getSavedFormulas() {
+function getLocalFormulas() {
   try {
     return JSON.parse(localStorage.getItem('cubeStudyFormulas') || '[]');
   } catch {
@@ -75,8 +78,27 @@ function getSavedFormulas() {
   }
 }
 
-function renderSavedFormulas() {
-  const formulas = getSavedFormulas();
+function saveLocalFormulas(formulas) {
+  localStorage.setItem('cubeStudyFormulas', JSON.stringify(formulas));
+}
+
+async function getSavedFormulas() {
+  try {
+    const response = await fetch(formulaApi, { headers: { Accept: 'application/json' } });
+    if (!response.ok) throw new Error(`GET ${response.status}`);
+    apiAvailable = true;
+    storageMode.textContent = 'Đang đồng bộ với backend admin.';
+    const data = await response.json();
+    return data.items || data;
+  } catch {
+    apiAvailable = false;
+    storageMode.textContent = 'Backend chưa sẵn sàng, đang dùng localStorage cho môi trường phát triển.';
+    return getLocalFormulas();
+  }
+}
+
+async function renderSavedFormulas() {
+  const formulas = await getSavedFormulas();
   savedList.innerHTML = formulas.length ? formulas.map((formula) => `
     <li>
       <div><strong>${formula.name}</strong><span>${formula.mode.toUpperCase()} · ${formula.moves}</span></div>
@@ -84,9 +106,13 @@ function renderSavedFormulas() {
     </li>
   `).join('') : '<li class="empty-state">Chưa có công thức tự tạo.</li>';
   savedList.querySelectorAll('[data-delete]').forEach((button) => {
-    button.addEventListener('click', () => {
-      const remaining = getSavedFormulas().filter((formula) => formula.id !== button.dataset.delete);
-      localStorage.setItem('cubeStudyFormulas', JSON.stringify(remaining));
+    button.addEventListener('click', async () => {
+      if (apiAvailable) {
+        const response = await fetch(`${formulaApi}/${encodeURIComponent(button.dataset.delete)}`, { method: 'DELETE' });
+        if (!response.ok) throw new Error(`DELETE ${response.status}`);
+      } else {
+        saveLocalFormulas((await getSavedFormulas()).filter((formula) => formula.id !== button.dataset.delete));
+      }
       renderSavedFormulas();
     });
   });
@@ -103,7 +129,7 @@ modeButtons.forEach((button) => {
   });
 });
 
-form.addEventListener('submit', (event) => {
+form.addEventListener('submit', async (event) => {
   event.preventDefault();
   const name = document.getElementById('formulaName').value.trim();
   const moves = document.getElementById('formulaMoves').value.trim();
@@ -111,16 +137,25 @@ form.addEventListener('submit', (event) => {
     status.textContent = 'Hãy nhập tên case và chuỗi công thức.';
     return;
   }
-  const formulas = getSavedFormulas();
-  formulas.unshift({
+  const formula = {
     id: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()),
     name,
     moves,
     mode: state.mode,
     stickers: state.mode === '2d' ? [...state.stickers2d] : structuredClone(state.stickers3d),
-  });
-  localStorage.setItem('cubeStudyFormulas', JSON.stringify(formulas));
-  status.textContent = 'Đã lưu công thức vào thư viện cá nhân.';
+  };
+  if (apiAvailable) {
+    const response = await fetch(formulaApi, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(formula),
+    });
+    if (!response.ok) throw new Error(`POST ${response.status}`);
+    status.textContent = 'Đã lưu công thức vào backend admin.';
+  } else {
+    saveLocalFormulas([formula, ...(await getSavedFormulas())]);
+    status.textContent = 'Đã lưu local, backend chưa sẵn sàng.';
+  }
   form.reset();
   renderSavedFormulas();
 });

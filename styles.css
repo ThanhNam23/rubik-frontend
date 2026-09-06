@@ -489,6 +489,15 @@ footer {
 .saved-list li span { color: var(--ink-soft); font: 12px 'JetBrains Mono', monospace; }
 .saved-list li button { border: 1px solid var(--line); border-radius: 4px; padding: 6px 10px; background: transparent; color: var(--ink-soft); cursor: pointer; }
 .saved-list .empty-state { color: var(--ink-soft); font-size: 13px; }
+.published-section { margin: 42px 0 10px; padding: 22px 0 0; border-top: 1px solid var(--line); }
+.section-heading { display: flex; align-items: baseline; gap: 12px; }
+.section-heading h2 { font-size: 22px; }
+.section-heading span, .published-type { color: var(--yellow); font: 11px 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: .08em; }
+.published-section .case-grid { margin-top: 18px; }
+.published-visual { width: 100%; min-height: 90px; display: grid; place-items: center; margin: 4px 0; border: 1px solid var(--line); border-radius: 8px; background: var(--navy); }
+.published-2d { grid-template-columns: repeat(3, 28px); grid-auto-rows: 28px; gap: 3px; padding: 10px; }
+.published-2d .sticker { border-radius: 3px; }
+.published-cube-label { color: var(--ink-soft); font: 12px 'JetBrains Mono', monospace; }
 .canvas-3d { width: 270px; height: 230px; display: grid; place-items: center; perspective: 800px; }
 .canvas-3d .cube-3d { width: 130px; height: 130px; transform: rotateX(-25deg) rotateY(-35deg); }
 .canvas-3d .cube-face { padding: 4px; gap: 4px; border-width: 3px; border-radius: 6px; }

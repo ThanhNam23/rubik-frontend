@@ -24,6 +24,33 @@ function createMiniCube(container) {
 
 document.querySelectorAll('.oll-diagram, .pll-diagram').forEach(createMiniCube);
 
+async function loadPublishedFormulas() {
+  const section = document.getElementById('publishedSection');
+  const grid = document.getElementById('publishedGrid');
+  if (!section || !grid) return;
+  try {
+    const response = await fetch('/api/formulas?status=published', { headers: { Accept: 'application/json' } });
+    if (!response.ok) throw new Error(`GET ${response.status}`);
+    const data = await response.json();
+    const formulas = data.items || data;
+    if (!formulas.length) return;
+    section.hidden = false;
+    const escapeHtml = (value) => String(value).replace(/[&<>'"]/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[character]));
+    grid.innerHTML = formulas.map((formula) => `
+      <article class="case-card published-card">
+        <div class="published-type">${escapeHtml(formula.mode).toUpperCase()} · admin</div>
+        <h3>${escapeHtml(formula.name)}</h3>
+        <div class="published-visual ${formula.mode === '3d' ? 'published-3d' : 'published-2d'}">${formula.mode === '2d' ? (formula.stickers || []).map((color) => `<i class="sticker ${escapeHtml(color)}"></i>`).join('') : '<span class="published-cube-label">3D case</span>'}</div>
+        <div class="move">${escapeHtml(formula.moves)}</div>
+      </article>
+    `).join('');
+  } catch {
+    // Static sample formulas remain available when the API is offline.
+  }
+}
+
+loadPublishedFormulas();
+
 // ---- Tabs cho trang algorithms.html ----
 const tabButtons = document.querySelectorAll('.tab-row button');
 const tabLabels = {
