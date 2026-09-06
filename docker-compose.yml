@@ -1,0 +1,12 @@
+services:
+  rubik-backend:
+    build: ./backend
+    container_name: rubik-backend
+    restart: unless-stopped
+    ports:
+      - "8888:8888"
+    volumes:
+      - rubik-data:/data
+
+volumes:
+  rubik-data:
