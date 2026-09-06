@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ký hiệu — cube.study</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="nav">
+    <div class="shell">
+      <a href="index.html" class="brand">
+        <span class="cube-mark">
+          <span style="background:#d1362f"></span><span style="background:#f2c230"></span><span style="background:#2166c9"></span>
+          <span style="background:#3d9450"></span><span style="background:#f4f2ea"></span><span style="background:#e0691f"></span>
+          <span style="background:#f2c230"></span><span style="background:#d1362f"></span><span style="background:#3d9450"></span>
+        </span>
+        cube.study
+      </a>
+      <div class="nav-links">
+        <a href="notation.html" class="active">Ký hiệu</a>
+        <a href="algorithms.html">Công thức</a>
+        <a href="solver.html">Giải tự động</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="shell">
+    <span class="eyebrow">Nền tảng</span>
+    <h1 style="margin-top:14px">Ký hiệu nước đi</h1>
+    <p style="color:var(--ink-soft); max-width:60ch; margin-top:14px">
+      Mỗi chữ cái đại diện cho 1 mặt của khối. Chữ thường là xoay thuận chiều kim
+      đồng hồ, thêm dấu <span class="move">'</span> là ngược chiều, thêm số
+      <span class="move">2</span> là xoay 180°. Ví dụ <span class="move">R U R' U'</span>
+      là 1 chuỗi 4 nước đi rất phổ biến.
+    </p>
+
+    <div class="notation-grid">
+      <div class="letter" style="color:var(--red)">F</div>
+      <div><strong>Front</strong><div class="desc">Xoay mặt trước 90°. F' ngược chiều, F2 xoay 180°.</div></div>
+
+      <div class="letter" style="color:var(--orange)">B</div>
+      <div><strong>Back</strong><div class="desc">Xoay mặt sau 90°, nhìn từ phía mặt đó vào tâm khối.</div></div>
+
+      <div class="letter" style="color:var(--white)">U</div>
+      <div><strong>Up</strong><div class="desc">Xoay mặt trên 90°. Nước đi xuất hiện nhiều nhất trong công thức.</div></div>
+
+      <div class="letter" style="color:var(--yellow)">D</div>
+      <div><strong>Down</strong><div class="desc">Xoay mặt dưới 90°, ít dùng hơn vì tay khó thao tác.</div></div>
+
+      <div class="letter" style="color:var(--green)">L</div>
+      <div><strong>Left</strong><div class="desc">Xoay mặt trái 90°, nhìn từ phía mặt đó vào tâm khối.</div></div>
+
+      <div class="letter" style="color:var(--blue)">R</div>
+      <div><strong>Right</strong><div class="desc">Xoay mặt phải 90° — cùng U là 2 nước đi nền tảng nhất.</div></div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="shell">cube.study — dự án học tập cá nhân</div>
+  </footer>
+</body>
+</html>

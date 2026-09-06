@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Giải tự động — cube.study</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <nav class="nav">
+    <div class="shell">
+      <a href="index.html" class="brand">
+        <span class="cube-mark">
+          <span style="background:#d1362f"></span><span style="background:#f2c230"></span><span style="background:#2166c9"></span>
+          <span style="background:#3d9450"></span><span style="background:#f4f2ea"></span><span style="background:#e0691f"></span>
+          <span style="background:#f2c230"></span><span style="background:#d1362f"></span><span style="background:#3d9450"></span>
+        </span>
+        cube.study
+      </a>
+      <div class="nav-links">
+        <a href="notation.html">Ký hiệu</a>
+        <a href="algorithms.html">Công thức</a>
+        <a href="solver.html" class="active">Giải tự động</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="shell">
+    <span class="eyebrow">Công cụ</span>
+    <h1 style="margin-top:14px">Bộ giải tự động</h1>
+    <p style="color:var(--ink-soft); max-width:60ch; margin-top:14px">
+      Tạo 1 chuỗi xáo trộn ngẫu nhiên, hoặc dán chuỗi bạn tự có — hệ thống sẽ tính
+      lời giải ở phía server.
+    </p>
+
+    <div class="solver-box">
+      <label for="scrambleInput">Chuỗi xáo trộn</label>
+      <input id="scrambleInput" placeholder="R U2 F' L D2 B U' R2 F..." />
+      <div>
+        <button class="primary" id="btnScramble">Tạo xáo trộn</button>
+        <button class="secondary" id="btnSolve">Giải</button>
+      </div>
+      <div class="result-line" id="resultLine"></div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="shell">cube.study — dự án học tập cá nhân</div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
