@@ -59,6 +59,16 @@ const tabLabels = {
   pll: 'Permute Last Layer — hoán vị tầng cuối',
 };
 
+// Keep the admin context visible while reviewing public pages on admin.cube.local.
+const navLinks = document.querySelector('.nav-links');
+if (navLinks && window.location.hostname === 'admin.cube.local' && !navLinks.querySelector('a[href="admin.html"]')) {
+  const adminLink = document.createElement('a');
+  adminLink.href = 'admin.html';
+  adminLink.textContent = 'Admin';
+  adminLink.className = 'active';
+  navLinks.appendChild(adminLink);
+}
+
 tabButtons.forEach((btn) => {
   btn.addEventListener('click', () => {
     const tab = btn.dataset.tab;
